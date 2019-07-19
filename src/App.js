@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Cart from './components/Cart';
+import Items from './components/Items';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cart: [],
+      searchValue: ''
+    }
+  }
+
+  addToCart = (item) => {
+    let cart = this.state.cart;
+      let itemPresent = cart.find(r=> r.id === item.id);
+      if (itemPresent) {
+        itemPresent.count++;
+      } else {
+        itemPresent = item;
+        cart.push(itemPresent);
+      }
+      this.setState({
+        cart: cart
+      });
+
+  }
+
+  search = (ev) => {
+    this.setState({
+      searchValue: ev.target.value
+    });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        Search<input onChange={(ev) => this.search(ev)}/>
+        <Items addToCart={this.addToCart} searchValue={this.state.searchValue}/>
+        <Cart cart={this.state.cart}/>
+      </div>
+    );
+  }
 }
 
 export default App;

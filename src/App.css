@@ -23,6 +23,15 @@
   color: #61dafb;
 }
 
+.item {
+  border: 1px solid grey;
+  width: 10%;
+}
+
+.boldSearch {
+  font-weight: bold;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
