@@ -27,18 +27,36 @@ class App extends React.Component {
 
   }
 
+  removeFromCart = (item) => {
+    let cart = this.state.cart;
+    let itemPresent = cart.find(r=> r.id === item.id);
+    if (itemPresent.count === 1) {
+      cart.pop(item);
+    }
+    if (itemPresent) {
+      itemPresent.count--;
+    }
+
+
+    this.setState({
+      cart: cart
+    });
+  }
+
   search = (ev) => {
     this.setState({
       searchValue: ev.target.value
     });
   }
 
+
+
   render() {
     return (
       <div className="App">
         Search<input onChange={(ev) => this.search(ev)}/>
         <Items addToCart={this.addToCart} searchValue={this.state.searchValue}/>
-        <Cart cart={this.state.cart}/>
+        <Cart addToCart={this.addToCart} removeFromCart={this.removeFromCart} cart={this.state.cart}/>
       </div>
     );
   }
